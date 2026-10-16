@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>폭풍 해협의 후계자</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Unbounded:wght@500;700&display=swap');
+
+    :root { --ink:#e8e3d0; --muted:#a9b4b5; --sea:#062530; --red:#a52f35; --gold:#d9b06e; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--ink); background:#020b12; font-family:'Noto Serif KR', serif; overflow-x:hidden; }
+    .storm { position:fixed; inset:0; z-index:-2; background:
+      radial-gradient(ellipse at 65% 10%, #304955 0 3%, transparent 25%),
+      linear-gradient(160deg, #101b2a 0%, #07141e 43%, #02090e 100%); }
+    .storm::after { content:''; position:absolute; inset:0; opacity:.27; background:repeating-linear-gradient(112deg, transparent 0 28px, #b2d2d4 29px 30px, transparent 31px 78px); animation:rain .5s linear infinite; }
+    @keyframes rain { to { transform:translate(-35px, 80px); } }
+    main { width:min(920px, 94vw); margin:0 auto; padding:28px 0 52px; }
+    header { display:flex; align-items:end; justify-content:space-between; border-bottom:1px solid #72828877; padding-bottom:16px; }
+    .eyebrow { margin:0 0 7px; font-family:Unbounded,sans-serif; font-size:.62rem; letter-spacing:.14em; color:var(--gold); }
+    h1 { margin:0; font-size:clamp(1.6rem,5vw,3.05rem); letter-spacing:-.08em; font-weight:700; }
+    .chapter { color:var(--muted); font-size:.8rem; text-align:right; }
+    .scene { position:relative; min-height:470px; margin-top:28px; padding:clamp(24px,5vw,52px); overflow:hidden; border:1px solid #89969d66; background:linear-gradient(90deg,rgba(2,9,14,.94) 0%,rgba(2,9,14,.7) 43%,rgba(2,9,14,.1) 78%), linear-gradient(0deg,rgba(2,9,14,.78),transparent 57%), url('assets/storm-strait-key-art.png') center/cover; box-shadow:0 20px 70px #000a; }
+    .scene::before { content:''; position:absolute; inset:0; background:linear-gradient(180deg,rgba(3,12,18,.12),rgba(3,12,18,.36)); pointer-events:none; }
+    .scene::after { content:'⚓'; position:absolute; font-size:13rem; color:#8ba3a811; right:-10px; bottom:-77px; transform:rotate(-17deg); }
+    .moon { display:none; }
+    .content { position:relative; max-width:650px; text-shadow:0 2px 8px #000; }
+    .speaker { margin:0 0 10px; color:var(--gold); font-weight:700; letter-spacing:.08em; font-size:.8rem; }
+    #text { margin:0; font-size:clamp(1rem,2.2vw,1.25rem); line-height:2; text-shadow:0 2px 5px #000; white-space:pre-line; }
+    .status { display:flex; flex-wrap:wrap; gap:10px; margin:19px 0 0; font-family:Unbounded,sans-serif; font-size:.62rem; color:#c9d6d4; }
+    .status span { padding:8px 10px; border:1px solid #94a7a555; background:#061017aa; }
+    .status b { color:var(--gold); font-weight:500; }
+    .choices { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin-top:18px; }
+    button { min-height:64px; cursor:pointer; text-align:left; color:var(--ink); font:600 .92rem/1.45 'Noto Serif KR',serif; padding:12px 16px; border:1px solid #9dafab66; background:#0a1820db; transition:.18s ease; }
+    button:hover, button:focus { outline:none; border-color:var(--gold); transform:translateY(-2px); background:#172930; }
+    button span { display:block; color:var(--gold); font-family:Unbounded,sans-serif; font-size:.57rem; margin-bottom:4px; }
+    .combat { margin-top:18px; padding:15px; border-left:3px solid var(--red); background:#1a0d12cc; display:none; }
+    .bar { height:9px; margin:7px 0 13px; background:#301d20; } .bar i { display:block; width:100%; height:100%; background:linear-gradient(90deg,#a52f35,#d96b5e); transition:width .35s; }
+    .combat button { min-height:auto; padding:8px 12px; margin-right:6px; }
+    .tip { margin:26px 4px 0; color:#a5b1b0; font-size:.83rem; }
+    .ending { margin-top:20px; padding:22px; border:1px solid #b18b4f88; background:#211c15dd; display:none; }
+    .ending h2 { color:var(--gold); margin:0 0 8px; font-size:1.2rem; }
+    .title-screen { position:fixed; z-index:5; inset:0; display:grid; place-items:center; padding:22px; background:linear-gradient(90deg,rgba(1,7,12,.92),rgba(1,7,12,.57)),url('assets/storm-strait-key-art.png') center/cover; }
+    .title-card { width:min(610px,100%); padding:clamp(28px,7vw,62px); border:1px solid #c4b58b77; background:linear-gradient(140deg,#08131be8,#061017bd); box-shadow:0 24px 80px #000b; }
+    .title-card h2 { margin:8px 0 16px; font-size:clamp(2.2rem,8vw,4.6rem); line-height:.98; letter-spacing:-.1em; }
+    .title-card p { max-width:470px; line-height:1.8; color:#c1ccca; }
+    .title-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }
+    .title-actions button { min-width:172px; text-align:center; border-color:#d9b06e99; background:#172b31df; }
+    .title-actions button.secondary { border-color:#a9b4b566; background:#09151bdf; }
+    .title-actions button:disabled { opacity:.38; cursor:not-allowed; transform:none; }
+    .smallprint { margin-top:24px; font-size:.74rem; color:#98a6a4; }
+    @media (max-width:540px) { header { align-items:start; flex-direction:column; gap:9px; } .chapter { text-align:left; } .scene { min-height:360px; } }
+  </style>
+</head>
+<body>
+  <div class="storm"></div>
+  <section class="title-screen" id="titleScreen" aria-label="게임 시작 화면"><div class="title-card">
+    <p class="eyebrow">A DARK FANTASY ADVENTURE</p>
+    <h2>폭풍 해협의<br>후계자</h2>
+    <p>세상물정 모르는 어린 후계자는, 폭풍이 갈라놓은 해협에서 왕국을 삼킨 존재와 마주한다.</p>
+    <div class="title-actions"><button onclick="newGame()">새 게임</button><button class="secondary" id="continueButton" onclick="continueGame()">이어하기</button></div>
+    <p class="smallprint">선택은 자동으로 이 브라우저에 저장됩니다.</p>
+  </div></section>
+  <main>
+    <header><div><p class="eyebrow">THE HEIR OF THE STORM STRAIT</p><h1>폭풍 해협의 후계자</h1></div><div class="chapter">프롤로그 · 바다가 이름을 부를 때</div></header>
+    <section class="scene" aria-live="polite"><div class="moon"></div><div class="content">
+      <p class="speaker" id="speaker">나르, 열세 살</p><p id="text"></p>
+      <div class="status"><span>오만 <b id="pride">3</b></span><span>상처 <b id="wounds">0</b></span><span>낡은 검 <b id="blade">있음</b></span></div>
+      <div class="choices" id="choices"></div>
+      <div class="combat" id="combat"><strong id="combatTitle">물안개 속의 망령이 길을 막았다.</strong><div id="combatLabel">망령의 기세</div><div class="bar"><i id="hp"></i></div><p id="combatMessage"></p><button onclick="attack('cut')">검을 휘두른다</button><button onclick="attack('taunt')">비웃어 흔든다</button><button onclick="attack('listen')">바다의 소리를 듣는다</button></div>
+      <div class="ending" id="ending"><h2 id="endingTitle">폭풍 해협의 후계자</h2><p id="endingText"></p><button onclick="restart()">처음부터 다시</button></div>
+    </div></section>
+    <p class="tip">선택에 따라 나르의 오만과 상처가 달라져요. 은빛 조개는 마지막 싸움의 열쇠입니다.</p>
+  </main>
+  <script>
+    const state={pride:3,wounds:0,enemy:3,enemyMax:3,fightType:'',shell:false,scene:'start'};
+    const scenes={
+      start:{speaker:'나르, 열세 살',text:'폭풍은 바다를 갈기갈기 찢고 있었다.\n\n절벽 위, 왕가의 문장이 새겨진 망토를 두른 나르는 검은 등대 쪽을 바라보았다. 그곳에는 왕국을 삼킨 존재, ‘해협의 왕’이 잠들어 있다.\n\n“내가 깨우고, 내가 끝내지.”',choices:[['A · 물안개 속으로','안개 낀 부두로 내려간다.','mist'],['B · 폐허의 길로','바람 부는 절벽길을 고른다.','cliff']]},
+      mist:{speaker:'낡은 부두',text:'젖은 밧줄이 뱀처럼 꿈틀댄다. 물안개 속에서 어린 목소리가 들린다. “돌아가. 너도 결국 먹히게 될 거야.”\n\n나르는 그 목소리가 겁에 질렸다는 것을 알아챘다.',choices:[['A · 손을 내민다','두려움을 인정하고, 도움을 청한다.','kind'],['B · 조롱한다','“겁쟁이의 조언은 필요 없어.”','fight']]},
+      cliff:{speaker:'절벽길',text:'벼락이 바위를 비출 때마다, 아래 해협에 가라앉은 종탑이 보인다. 그 탑의 종은 해협의 왕을 깨운다는 전설이 있다.\n\n바람이 나르의 망토를 잡아당긴다.',choices:[['A · 종탑으로 간다','위험하지만 빠른 길을 택한다.','fight'],['B · 표식을 남긴다','돌아올 길을 잃지 않게 한다.','kind']]},
+      kind:{speaker:'바다의 속삭임',text:'나르가 고개를 숙이자, 폭풍 소리가 잠시 낮아졌다. 물안개 속의 아이는 사실 오래전 익사한 항해사의 그림자였다.\n\n“해협의 왕은 힘센 자가 아니라, 혼자라고 믿는 자를 노려.”\n\n그림자는 은빛 조개를 남기고 사라졌다.',choices:[['계속 · 검은 등대로','조개를 쥐고 등대로 향한다.','final']]},
+      final:{speaker:'검은 등대',text:'등대의 문이 스스로 열렸다. 꼭대기에는 해협의 왕이 폭풍을 두른 채 서 있다.\n\n“작은 후계자여, 네가 세상을 모른다는 것이 가장 맛있구나.”\n\n나르는 처음으로 대답하지 못했다. 하지만 발은 멈추지 않았다.',choices:[['마지막 계단을 오른다','해협의 왕과 마주한다.','boss']]},
+      fight:{speaker:'물안개의 망령',text:'“오만한 아이야.” 물안개가 뼈 없는 팔을 뻗었다.\n\n나르는 검을 뽑았다. 이겨야 한다. 적어도, 물러서지는 않아야 한다.',choices:[]}
+    };
+    function render(key){const s=scenes[key];state.scene=key;speaker.textContent=s.speaker;text.textContent=s.text;combat.style.display='none';ending.style.display='none';choices.innerHTML='';s.choices.forEach(([label,desc,next])=>{const b=document.createElement('button');b.innerHTML=`<span>${label}</span>${desc}`;b.onclick=()=>choose(next);choices.appendChild(b)}); sync();saveProgress();}
+    function choose(next){if(next==='fight'){state.pride++;startFight('wraith');}else if(next==='boss'){startFight('king');}else {if(next==='kind'){state.pride=Math.max(0,state.pride-1);state.shell=true;}render(next);}}
+    function startFight(type){state.fightType=type;state.enemy=type==='king'?5:3;state.enemyMax=state.enemy;combatTitle.textContent=type==='king'?'해협의 왕이 폭풍을 두른다.':'물안개 속의 망령이 길을 막았다.';combatLabel.textContent=type==='king'?'해협의 왕의 기세':'망령의 기세';combatMessage.textContent=type==='king'?(state.shell?'은빛 조개가 손안에서 미세하게 울린다.':'파도 소리가 모든 생각을 삼키려 한다.'):'적의 움직임을 읽어라.';speaker.textContent=type==='king'?'등대의 꼭대기':'물안개의 망령';text.textContent=type==='king'?'등대가 기울고, 해협 전체가 포효했다. 나르는 이제 혼자가 아님과, 그래도 혼자 싸워야 한다는 것을 동시에 알았다.':'“오만한 아이야.” 물안개가 뼈 없는 팔을 뻗었다. 나르는 검을 뽑았다.';choices.innerHTML='';ending.style.display='none';combat.style.display='block';sync();}
+    function attack(type){let damage=1;let wound=0;if(state.fightType==='king'){if(type==='cut'){wound=1;combatMessage.textContent='검은 폭풍을 가르지만, 왕의 파도가 나르를 후려친다.';}if(type==='taunt'){wound=1;state.pride++;combatMessage.textContent='왕은 웃었지만, 그 웃음 틈으로 칼날이 스며든다.';}if(type==='listen'){if(state.shell){damage=2;state.pride=Math.max(0,state.pride-1);combatMessage.textContent='조개 속 항해사의 노래가 폭풍의 박자를 끊는다.';}else{damage=0;wound=1;combatMessage.textContent='바다는 답하지 않는다. 대가는 상처였다.';}}}else{if(type==='cut'){wound=1;combatMessage.textContent='검날이 물안개를 찢는다.';}if(type==='taunt'){state.pride++;combatMessage.textContent='망령이 분노하며 형태를 잃는다.';}if(type==='listen'){damage=state.shell?2:1;combatMessage.textContent=state.shell?'조개가 울리고 망령의 기억이 흩어진다.':'파도 사이에서 빈틈을 듣는다.';}}state.enemy-=damage;state.wounds+=wound;hp.style.width=Math.max(0,state.enemy/state.enemyMax*100)+'%';sync();if(state.enemy<=0)victory();}
+    function victory(){combat.style.display='none';choices.innerHTML='';if(state.fightType==='king'){finish();return;}speaker.textContent='나르';text.textContent='망령은 파도처럼 흩어졌다. 나르는 숨을 고르며 검을 거두었다. 승리라기보다, 앞으로 만날 것들의 첫 인사였다.';const b=document.createElement('button');b.innerHTML='<span>계속</span>검은 등대로 향한다.';b.onclick=()=>render('final');choices.appendChild(b);}
+    function sync(){pride.textContent=state.pride;wounds.textContent=state.wounds;blade.textContent=state.wounds>1?'금이 감':'있음';}
+    function finish(){choices.innerHTML='';state.scene='finish';endingTitle.textContent='해협의 왕을 물리쳤다';endingText.textContent=state.shell?`은빛 조개가 마지막으로 빛났고, 폭풍은 길을 내주었다. 오만 ${state.pride}, 상처 ${state.wounds}. 나르는 왕관보다 무거운 것을 배웠다: 혼자 이기는 법은 없다는 것.`:`왕은 파도와 함께 사라졌다. 오만 ${state.pride}, 상처 ${state.wounds}. 나르는 살아남았지만, 해협은 아직 아무것도 용서하지 않았다.`;ending.style.display='block';saveProgress();}
+    function saveProgress(){localStorage.setItem('storm-strait-save',JSON.stringify(state));continueButton.disabled=false;}
+    function readSave(){try{return JSON.parse(localStorage.getItem('storm-strait-save'))}catch{return null}}
+    function showTitle(){const saved=readSave();continueButton.disabled=!saved;titleScreen.style.display='grid';}
+    function newGame(){Object.assign(state,{pride:3,wounds:0,enemy:3,enemyMax:3,fightType:'',shell:false,scene:'start'});hp.style.width='100%';titleScreen.style.display='none';render('start');}
+    function continueGame(){const saved=readSave();if(!saved)return;Object.assign(state,saved);titleScreen.style.display='none';if(state.scene==='finish'){finish();}else{render(state.scene in scenes?state.scene:'start');}}
+    function restart(){newGame();}
+    const {speaker,text,choices,combat,ending,endingTitle,endingText,pride,wounds,blade,hp,combatTitle,combatLabel,combatMessage,titleScreen,continueButton}=Object.fromEntries(['speaker','text','choices','combat','ending','endingTitle','endingText','pride','wounds','blade','hp','combatTitle','combatLabel','combatMessage','titleScreen','continueButton'].map(id=>[id,document.getElementById(id)])); showTitle();
+  </script>
+</body>
+</html>
